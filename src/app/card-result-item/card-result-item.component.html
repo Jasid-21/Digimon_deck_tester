@@ -1,0 +1,16 @@
+<div class="card-result-item" (mouseenter)="setAsCurrent()" (contextmenu)="addToDeck($event)">
+  <img [src]="card.image_url" class="card_img">
+  <div class="info">
+    <span class="name">{{ card.name }}</span>
+    <div class="info-row costs">
+      <div class="lv"><b>Lv: </b>{{ card.level }}</div>
+      <div class="Cost"><b>Cost: </b>{{ card.play_cost }}</div>
+      <div class="Ev.Cost"><b>Ev.cost: </b>{{ card.evolution_cost }}</div>
+    </div>
+    <div class="info-row traits">
+      <div class="type"><b>Type: </b>{{ card.digi_type }}</div>
+      <div class="type"><b>Stage: </b>{{ card.stage }}</div>
+      <div class="type"><b>Attr: </b>{{ card.attribute }}</div>
+    </div>
+  </div>
+</div>

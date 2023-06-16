@@ -1,0 +1,4 @@
+<div class="card" (mouseenter)="setAsCurrent()" (contextmenu)="removeFromDeck($event)">
+  <img [src]="card.image_url" *ngIf="card.image_url">
+  <img src="./../../assets/backCard.png" *ngIf="!card.image_url">
+</div>

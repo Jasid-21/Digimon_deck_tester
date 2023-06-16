@@ -1,0 +1,30 @@
+nav {
+  height: 60px;
+  background-color: rgb(25, 76, 153);
+}
+
+.nav-options {
+  width: 100%;
+  height: 100%;
+
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-options > li {
+  margin: 0px;
+  padding: 0px;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-options a {
+  color: inherit;
+  text-decoration: inherit;
+}
