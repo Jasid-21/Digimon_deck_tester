@@ -28,14 +28,15 @@
           <span class="players">Players</span>
         </div>
         <ul class="rooms-list">
-          <li *ngFor="let r of rooms">
+          <li *ngFor="let r of rooms" [class.active]="r.id == chosen_room"
+          (click)="choseRoom(r.id)">
             <div class="room-name">{{ r.id }}</div>
             <div class="players">{{ r.players }}</div>
           </li>
         </ul>
       </div>
       <div class="options-container">
-        <button class="request">Request</button>
+        <button class="request" (click)="requestDuel()">Request</button>
         <button class="update" (click)="refreshRooms()">Refresh</button>
       </div>
     </div>

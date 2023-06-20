@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModalsService } from '../services/modals.service';
 import { AlertsService } from '../services/alerts.service';
 import { WebsocketService } from '../services/websocket.service';
+import { Request } from 'src/helpers/interfaces';
 
 @Component({
   selector: 'app-host-modal',
@@ -14,11 +15,22 @@ export class HostModalComponent {
     this.show = v;
   });
 
+  requests: Request[] = [];
+  requests$ = this.socket.requests.subscribe((v) => {
+    this.requests = v;
+  });
+
+  chosen_req: string = '';
+
   constructor(
     private modals: ModalsService,
     private alerts: AlertsService,
     private socket: WebsocketService,
   ) {}
+
+  choseRequest(id: string) {
+    this.chosen_req = id;
+  }
 
   closeModal() {
     this.alerts.fireAlert({

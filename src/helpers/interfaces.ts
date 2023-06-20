@@ -58,3 +58,8 @@ export interface Room {
   id: string;
   players: string[];
 }
+
+export interface Request {
+  username: string;
+  user_id: string;
+}

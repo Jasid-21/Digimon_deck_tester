@@ -1,6 +1,5 @@
-import { Component,  OnInit, ViewChild } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { WebsocketService } from '../services/websocket.service';
-import { RequestsModalComponent } from '../requests-modal/requests-modal.component';
 import { Room, codeDeck } from 'src/helpers/interfaces';
 import { SavedDecksService } from '../services/saved-decks.service';
 import { AlertsService } from '../services/alerts.service';
@@ -15,6 +14,7 @@ export class RoomsComponent implements OnInit {
   username: string = 'Player';
   chosen_deck: string = '';
   code_decks: codeDeck[] = [];
+  chosen_room: string = '';
 
   rooms: Room[] = [];
   rooms$ = this.socket.rooms.subscribe((v) => {
@@ -37,8 +37,21 @@ export class RoomsComponent implements OnInit {
     this.socket.refreshRooms();
   }
 
-  openModal() {
-    console.log("jksda");
+  choseRoom(id: string) {
+    this.chosen_room = id;
+  }
+
+  requestDuel() {
+    if (!this.chosen_room) return;
+    if (!this.username || !this.chosen_deck) {
+      this.alerts.fireAlert({
+        swal: true,
+        content: 'You need to povide a username and a deck before request a duel...',
+        icon: 'error',
+      });
+      return;
+    }
+    this.socket.requestDuel(this.chosen_room, this.username);
   }
 
   hostRoom() {

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import * as io from 'socket.io-client';
 import { AlertsService } from './alerts.service';
 import { BehaviorSubject } from 'rxjs';
-import { Room, codeDeck } from 'src/helpers/interfaces';
+import { Request, Room, codeDeck } from 'src/helpers/interfaces';
 import { ModalsService } from './modals.service';
 
 @Injectable({
@@ -11,6 +11,7 @@ import { ModalsService } from './modals.service';
 export class WebsocketService {
   socket = io.io(`http://localhost:3001`);
   rooms = new BehaviorSubject<Room[]>([]);
+  requests = new BehaviorSubject<Request[]>([]);
 
   constructor(
     private alerts: AlertsService,
@@ -21,6 +22,16 @@ export class WebsocketService {
     this.socket.connect();
     this.socket.on('connect', () => {
       this.refreshRooms();
+    });
+
+    this.socket.on('request_duel',
+    (data) => {
+      const { username, user_id } = data;
+      this.requests.next([...this.requests.getValue(), { username, user_id }]);
+    });
+
+    this.socket.on('cancel_request', (user_id) => {
+      this.requests.next(this.requests.getValue().filter((r) => r.user_id != user_id));
     });
   }
 
@@ -42,5 +53,25 @@ export class WebsocketService {
     this.socket.emit('stop_hosting', () => {
       this.refreshRooms();
     })
+  }
+
+  requestDuel(room_id: string, username: string) {
+    this.socket.emit('request_duel', { room_id, username },
+    (data: boolean) => {
+      if (!data) {
+        this.alerts.fireAlert({
+          swal: true,
+          content: 'Error requesting duel',
+          icon: 'error',
+        });
+        return;
+      }
+
+      this.modals.openRequestModal(room_id);
+    });
+  }
+
+  cancelRequest(room_id: string) {
+    this.socket.emit('cancel_request', room_id);
   }
 }

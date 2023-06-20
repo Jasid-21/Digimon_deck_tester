@@ -6,7 +6,10 @@
       <b>Username: </b> player username <br>
     </div>
     <ul class="request-list">
-      <li class="request">Player 1</li>
+      <li class="request" [class.active]="r.user_id == chosen_req" *ngFor="let r of requests"
+      (click)="choseRequest(r.user_id)">
+        {{ r.username }}
+      </li>
     </ul>
     <div class="buttons-container">
       <button class="accept">Accept</button>
