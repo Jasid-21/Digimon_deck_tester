@@ -1,0 +1,43 @@
+<div class="masterContainer">
+  <app-requests-modal></app-requests-modal>
+  <app-host-modal></app-host-modal>
+  <app-navbar></app-navbar>
+  <div class="body">
+    <form class="host-form" (submit)="hostRoom()">
+      <div class="param-container">
+        <label for="username">Username: </label>
+        <input type="text" name="username" placeholder="Type a username" [(ngModel)]="username">
+      </div>
+
+      <div class="param-container">
+        <label for="deck-list">Decks: </label>
+        <select name="deck-list" [(ngModel)]="chosen_deck">
+          <option value="">--Select--</option>
+          <option *ngFor="let d of code_decks" [value]="d.name">{{ d.name }}</option>
+        </select>
+      </div>
+
+      <input type="submit" class="host-btn" value="Host">
+    </form>
+
+    <div class="rooms-container">
+      <h3>Active rooms</h3>
+      <div class="rooms-list-container">
+        <div class="titles">
+          <span class="room-name">Room name</span>
+          <span class="players">Players</span>
+        </div>
+        <ul class="rooms-list">
+          <li *ngFor="let r of rooms">
+            <div class="room-name">{{ r.id }}</div>
+            <div class="players">{{ r.players }}</div>
+          </li>
+        </ul>
+      </div>
+      <div class="options-container">
+        <button class="request">Request</button>
+        <button class="update" (click)="refreshRooms()">Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>

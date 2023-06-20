@@ -1,8 +1,8 @@
-type PlacesType = 'hand' | 'field' | 'digimon' | 'drop' | 'deck' | 'security' | 'hatch_down' | 'hatch_up';
-type CardStrProp = 'name' | 'color' | 'type';
-type CardNumProp = 'level' | 'play_cost' | 'evolution_cost';
+export type PlacesType = 'hand' | 'field' | 'digimon' | 'drop' | 'deck' | 'security' | 'hatch_down' | 'hatch_up';
+export type CardStrProp = 'name' | 'color' | 'type';
+export type CardNumProp = 'level' | 'play_cost' | 'evolution_cost';
 
-interface CardInterface {
+export interface CardInterface {
   id: string;
   imgUrl: string;
   hidden: boolean;
@@ -12,7 +12,7 @@ interface CardInterface {
   player: string;
 }
 
-interface RawCard {
+export interface RawCard {
   name: string;
   type: string;
   color: string;
@@ -36,22 +36,25 @@ interface RawCard {
   image_url: string;
 }
 
-interface codeDeck {
+export interface codeDeck {
   name: string;
   code_deck: string[];
 }
 
-interface SavedRawDeck {
+export interface SavedRawDeck {
   name: string;
   raw_deck: RawCard[];
 }
 
-export {
-  CardInterface,
-  RawCard,
-  PlacesType,
-  CardStrProp,
-  CardNumProp,
-  SavedRawDeck,
-  codeDeck,
-};
+export interface AlertObject {
+  swal: boolean;
+  title?: string;
+  content: string;
+  icon?: 'success' | 'error' | 'warning' | 'info' | 'question';
+  cancel?: boolean;
+}
+
+export interface Room {
+  id: string;
+  players: string[];
+}

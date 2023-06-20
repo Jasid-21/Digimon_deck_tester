@@ -12,7 +12,12 @@ import { cardsReducer } from 'src/store/cardsStore/cards.reducers';
 import { rawDecksReducer } from 'src/store/rawDecksStore/rawDecks.reducers';
 import { RawCardComponent } from './raw-card/raw-card.component';
 import { CardResultItemComponent } from './card-result-item/card-result-item.component';
-import { SavedDecksService } from './saved-decks.service';
+import { SavedDecksService } from './services/saved-decks.service';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RoomsComponent } from './rooms/rooms.component';
+import { RequestsModalComponent } from './requests-modal/requests-modal.component';
+import { HostModalComponent } from './host-modal/host-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +27,9 @@ import { SavedDecksService } from './saved-decks.service';
     NavbarComponent,
     RawCardComponent,
     CardResultItemComponent,
+    RoomsComponent,
+    RequestsModalComponent,
+    HostModalComponent,
   ],
   imports: [
     FormsModule,
@@ -31,6 +39,8 @@ import { SavedDecksService } from './saved-decks.service';
       cards: cardsReducer,
       raw_decks: rawDecksReducer
     }),
+    SweetAlert2Module.forRoot(),
+    FontAwesomeModule
   ],
   providers: [SavedDecksService],
   bootstrap: [AppComponent]

@@ -4,10 +4,12 @@ import { CardNumProp, RawCard, SavedRawDeck } from 'src/helpers/interfaces';
 import { AppState } from 'src/store/app.state';
 import { selectCards, selectCurrentCard, selectCurrentDeck} from 'src/store/cardsStore/cards.selectors';
 import { CardStrProp } from 'src/helpers/interfaces';
-import { SavedDecksService } from '../saved-decks.service';
+import { SavedDecksService } from '../services/saved-decks.service';
 import { addDeck, setRawDecks } from 'src/store/rawDecksStore/rawDecks.actions';
 import { selectRawDecks } from 'src/store/rawDecksStore/rawDecks.selectors';
 import { setCurrentDeck } from 'src/store/cardsStore/cards.actions';
+import { AlertsService } from '../services/alerts.service';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-deck-builder',
@@ -40,6 +42,7 @@ export class DeckBuilderComponent {
     this.saved_decks = v;
   })
 
+  faTrash = faTrashCan;
   byName: string = '';
   byColor: string = '';
   byType: string = '';
@@ -57,10 +60,20 @@ export class DeckBuilderComponent {
   constructor(
     private store: Store<AppState>,
     private decks_serv: SavedDecksService,
+    private alerts: AlertsService,
   ) {}
 
   applyFilter(): void {
     this.cards = this.filter(this.total_cards);
+  }
+
+  resetParams(): void {
+    this.byName = '';
+    this.byColor = '';
+    this.byType = '';
+    this.byEvol = null;
+    this.byLevel = null;
+    this.byPlay = null;
   }
 
   filter(cards: RawCard[]): RawCard[] {
@@ -87,7 +100,11 @@ export class DeckBuilderComponent {
   loadDeck(): void {
     const chosen = this.saved_decks.find((sd) => sd.name == this.chosen_deck);
     if (!chosen) {
-      alert("Deck not found...");
+      this.alerts.fireAlert({
+          swal: true,
+          content: 'Deck not found',
+          icon:'error'
+        });
       return;
     }
 
@@ -98,13 +115,23 @@ export class DeckBuilderComponent {
 
   saveDeck(): void {
     if (!this.deck_name) {
-      alert("You need to provide a deck name");
+      this.alerts.fireAlert({
+          swal: true,
+          content: 'You need to provide a name',
+          icon:'error'
+        });
       return;
     }
 
     const deck = { name: this.deck_name, raw_deck: this.deck };
     this.store.dispatch(addDeck({ deck }));
 
+    this.alerts.fireAlert(
+      {
+        swal: true,
+        content: 'Successfully saved',
+        icon: 'success'
+      });
     setTimeout(() => {
       this.decks_serv.saveCodeDecks();
     }, 1000);
@@ -130,7 +157,12 @@ export class DeckBuilderComponent {
     this.store.dispatch(setRawDecks({ decks }));
     setTimeout(() => {
       this.decks_serv.saveCodeDecks();
-      alert("Deck successfully deleted!");
+      this.alerts.fireAlert(
+        {
+          swal: true,
+          content: 'Deck successfully deleted!',
+          icon:'success',
+        });
     }, 300);
   }
 }

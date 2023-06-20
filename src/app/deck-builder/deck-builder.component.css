@@ -1,8 +1,6 @@
 .masterContainer {
   width: 100vw;
   height: 100vh;
-
-  background: url('../../assets/background.png');
 }
 
 .body {
@@ -225,7 +223,7 @@ button.submit:hover {
 }
 
 .button-row {
-  justify-content: center;
+  justify-content: space-between;
 }
 .search-btn {
   width: 80%;

@@ -1,0 +1,16 @@
+<div class="modal-container" *ngIf="show" (click)="closeModal()">
+  <div class="host-modal" (click)="$event.stopPropagation()">
+    <h2>Hosting room</h2>
+    <div class="info-container">
+      <b>Room ID: </b> lkdjgqasjdkfnsdfn <br>
+      <b>Username: </b> player username <br>
+    </div>
+    <ul class="request-list">
+      <li class="request">Player 1</li>
+    </ul>
+    <div class="buttons-container">
+      <button class="accept">Accept</button>
+      <button class="cancel" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>

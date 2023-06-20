@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { SavedDecksService } from './saved-decks.service';
+import { SavedDecksService } from './services/saved-decks.service';
 import { SavedRawDeck, codeDeck } from 'src/helpers/interfaces';
 import { AppState } from 'src/store/app.state';
 import { setRawDecks } from 'src/store/rawDecksStore/rawDecks.actions';
 import { selectCards } from 'src/store/cardsStore/cards.selectors';
 import { setBuilderCards } from 'src/store/cardsStore/cards.actions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.code_decks = this.decks_serv.getCodeDecks();
 
-    const url = `http://localhost:3000/deck-builder`;
+    const url = `${environment.apiUrl}deck-builder`;
     const resp = await fetch(url);
     const json = await resp.json();
 
