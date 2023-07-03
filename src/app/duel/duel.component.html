@@ -1,0 +1,42 @@
+<div class="masterContainer">
+  <div class="info-container">
+    <div class="imageContainer">
+      <img src="./../../assets/backCard.png" *ngIf="!current">
+      <img [src]="current.imgUrl" *ngIf="current">
+    </div>
+    <div class="dataContainer">
+      <div class="digimonName">
+        {{ current?.name }}
+      </div>
+      <div class="detailsAndEffect">
+        <div class="details">
+          <div>
+            <b>Stage: </b> {{ current?.stage }}
+          </div>
+          <div>
+            <b>Attribute: </b> {{ current?.attribute }}
+          </div>
+          <div>
+            <b>Type: </b> {{ current?.digi_type }}
+          </div>
+          <div>
+            <b>Code: </b> {{ current?.cardnumber }}
+          </div>
+        </div>
+        <div class="effect">
+          <b>[Main Effect]</b><br>
+          {{ current?.maineffect }}<br>
+          <b>[Soure Effect]</b><br>
+          {{ current?.soureeffect }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tabletop-container">
+    <div class="tabletop">
+      <app-field-side [own]="false"></app-field-side>
+      <div class="memory-container"></div>
+      <app-field-side [own]="true"></app-field-side>
+    </div>
+  </div>
+</div>

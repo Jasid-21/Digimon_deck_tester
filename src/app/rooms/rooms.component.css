@@ -16,6 +16,15 @@ body * {
   box-sizing:border-box;
 }
 
+.fake-btn {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+
+  width: 50px;
+  height: 25px;
+}
+
 .host-form, .rooms-container {
   width: 90%;
   max-width: 500px;

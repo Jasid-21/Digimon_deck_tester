@@ -1,0 +1,8 @@
+<div class="circle-container" (click)="$event.stopPropagation()"
+[style]="styles" *ngIf="active">
+  <div class="circle-item" [class.closing]="closing" *ngFor="let item of items; let i = index"
+  [style.translate]="calcRotation(i).x + 'px ' + calcRotation(i).y + 'px'" (click)="doAction(item)">
+    <div class="text">{{ item.name }}</div>
+    <fa-icon [icon]="item.icon" *ngIf="item.icon"></fa-icon>
+  </div>
+</div>

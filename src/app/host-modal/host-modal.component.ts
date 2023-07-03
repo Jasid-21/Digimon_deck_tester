@@ -20,7 +20,13 @@ export class HostModalComponent {
     this.requests = v;
   });
 
-  chosen_req: string = '';
+  room_id = '';
+  room_id$ = this.modals.host_room_id.subscribe((v) => this.room_id = v);
+
+  username = '';
+  username$ = this.modals.host_username.subscribe((v) => this.username = v);
+
+  chosen_req = '';
 
   constructor(
     private modals: ModalsService,
@@ -40,9 +46,16 @@ export class HostModalComponent {
       icon: 'warning',
     })?.then((resp) => {
       if (resp.isConfirmed) {
-        this.socket.stopHosting();
+        const req_list = this.requests.map((r) => r.user_id);
+        this.socket.stopHosting(req_list);
         this.modals.closeModals();
       }
     });
+  }
+
+  acceptDuel() {
+    const op = this.requests.find((p) => p.user_id == this.chosen_req);
+    if (!op) return;
+    this.socket.startDuel(this.room_id, this.chosen_req, op.username, op.deck);
   }
 }

@@ -1,9 +1,11 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component,  OnInit, ViewChild } from '@angular/core';
 import { WebsocketService } from '../services/websocket.service';
-import { Room, codeDeck } from 'src/helpers/interfaces';
+import { Room, codeDeck, menuItem } from 'src/helpers/interfaces';
 import { SavedDecksService } from '../services/saved-decks.service';
 import { AlertsService } from '../services/alerts.service';
 import { ModalsService } from '../services/modals.service';
+import { RadialMenuComponent } from '../radial-menu/radial-menu.component';
+import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-rooms',
@@ -11,6 +13,8 @@ import { ModalsService } from '../services/modals.service';
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent implements OnInit {
+  @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
+
   username: string = 'Player';
   chosen_deck: string = '';
   code_decks: codeDeck[] = [];
@@ -33,6 +37,15 @@ export class RoomsComponent implements OnInit {
     this.code_decks = this.decksServ.getCodeDecks();
   }
 
+  startFakeDuel() {
+    const code_deck = this.decksServ.getCodeDecks()[0].code_deck;
+    this.socket.startFakeDuel(code_deck);
+  }
+
+  openMenu(id: number) {
+    this.radial.openMenu(id);
+  }
+
   refreshRooms() {
     this.socket.refreshRooms();
   }
@@ -51,7 +64,18 @@ export class RoomsComponent implements OnInit {
       });
       return;
     }
-    this.socket.requestDuel(this.chosen_room, this.username);
+
+    const deck = this.code_decks.find((d) => d.name == this.chosen_deck);
+    if (!deck) {
+      this.alerts.fireAlert({
+        swal: true,
+        content: 'Error with your saved decks...',
+        icon: 'error',
+      });
+
+      return;
+    }
+    this.socket.requestDuel(this.chosen_room, this.username, deck.code_deck);
   }
 
   hostRoom() {

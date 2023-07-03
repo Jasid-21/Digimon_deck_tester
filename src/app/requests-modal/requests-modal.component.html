@@ -1,3 +1,6 @@
 <div class="modal-container" *ngIf="show" (click)="closeModal()">
-  <div class="request-modal" (click)="$event.stopPropagation()"></div>
+  <div class="request-modal" (click)="$event.stopPropagation()">
+    <span>Waiting your oponent to accept the request...</span>
+    <button (click)="closeModal()">Cancel</button>
+  </div>
 </div>

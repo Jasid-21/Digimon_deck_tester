@@ -1,0 +1,4 @@
+<div class="cards-container deck" (click)="openMenu($event, id)">
+  <img src="../../assets/backCard.png" *ngIf="deck.cards.length">
+  <app-radial-menu [id]="id" [radius]="50" [items]="menuItems"></app-radial-menu>
+</div>

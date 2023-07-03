@@ -1,0 +1,58 @@
+.field-side {
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+
+  border: 1px solid red;
+  position: relative;
+
+  display: flex;
+}
+
+.field-side.oponent {
+  transform: rotateZ(180deg);
+}
+
+.cards-container {
+  width: 58px;
+  height: 80px;
+
+  border: 1px dashed gray;
+}
+
+.cards-container img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.pile-zone {
+  width: 85px;
+  height: 100%;
+
+  background-color: rgba(128, 128, 128, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+
+.battle-zone {
+  flex: 1;
+  height: 100%;
+
+  position: relative;
+}
+
+.security-zone, .hatch-zone {
+  position: absolute;
+}
+
+.security-zone {
+  width: 85px;
+  height: 140px;
+
+  border: 1px solid green;
+  top: 5px;
+  left: 5px;
+}

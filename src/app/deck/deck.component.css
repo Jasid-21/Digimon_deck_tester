@@ -1,0 +1,12 @@
+.cards-container {
+  width: 58px;
+  height: 80px;
+
+  border: 1px dashed gray;
+  position: relative;
+}
+
+.cards-container img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}

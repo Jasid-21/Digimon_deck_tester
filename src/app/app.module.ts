@@ -18,6 +18,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RequestsModalComponent } from './requests-modal/requests-modal.component';
 import { HostModalComponent } from './host-modal/host-modal.component';
+import { DuelComponent } from './duel/duel.component';
+import { FieldSideComponent } from './field-side/field-side.component';
+import { fieldReducer } from 'src/store/fieldStore/field.reducers';
+import { DuelStateService } from 'src/store/fieldState/duelstate.service';
+import { CardComponent } from './card/card.component';
+import { RadialMenuComponent } from './radial-menu/radial-menu.component';
+import { DeckComponent } from './deck/deck.component';
+import { HandComponent } from './hand/hand.component';
+import { HatchComponent } from './hatch/hatch.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +39,13 @@ import { HostModalComponent } from './host-modal/host-modal.component';
     RoomsComponent,
     RequestsModalComponent,
     HostModalComponent,
+    DuelComponent,
+    FieldSideComponent,
+    CardComponent,
+    RadialMenuComponent,
+    DeckComponent,
+    HandComponent,
+    HatchComponent,
   ],
   imports: [
     FormsModule,
@@ -37,12 +53,13 @@ import { HostModalComponent } from './host-modal/host-modal.component';
     AppRoutingModule,
     StoreModule.forRoot({
       cards: cardsReducer,
-      raw_decks: rawDecksReducer
+      raw_decks: rawDecksReducer,
+      field: fieldReducer,
     }),
     SweetAlert2Module.forRoot(),
     FontAwesomeModule
   ],
-  providers: [SavedDecksService],
+  providers: [SavedDecksService, DuelStateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

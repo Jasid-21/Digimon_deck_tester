@@ -1,0 +1,11 @@
+<div class="field-side" [class.oponent]="!own">
+  <div class="battle-zone" (dragenter)="$event.preventDefault();">
+    <div class="security-zone"></div>
+    <app-hatch [id]="3" [own]="own"></app-hatch>
+  </div>
+  <div class="pile-zone">
+    <app-deck [own]="own" [id]="1"></app-deck>
+    <div class="cards-container drop"></div>
+  </div>
+  <app-hand [own]="own" [id]="2"></app-hand>
+</div>

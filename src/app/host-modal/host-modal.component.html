@@ -2,17 +2,22 @@
   <div class="host-modal" (click)="$event.stopPropagation()">
     <h2>Hosting room</h2>
     <div class="info-container">
-      <b>Room ID: </b> lkdjgqasjdkfnsdfn <br>
-      <b>Username: </b> player username <br>
+      <b>Room ID: </b>{{ room_id }}<br>
+      <b>Username: </b>{{ username }}<br>
     </div>
     <ul class="request-list">
+      <li class="titles">
+        <div>Player ID</div>
+        <div>Player name</div>
+      </li>
       <li class="request" [class.active]="r.user_id == chosen_req" *ngFor="let r of requests"
       (click)="choseRequest(r.user_id)">
-        {{ r.username }}
+        <div>{{ r.user_id }}</div>
+        <div>{{ r.username }}</div>
       </li>
     </ul>
     <div class="buttons-container">
-      <button class="accept">Accept</button>
+      <button class="accept" (click)="acceptDuel()">Accept</button>
       <button class="cancel" (click)="closeModal()">Cancel</button>
     </div>
   </div>

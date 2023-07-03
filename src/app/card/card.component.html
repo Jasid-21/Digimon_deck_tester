@@ -1,0 +1,4 @@
+<div class="card" *ngIf="card" (mousemove)="setAsCurrent()">
+  <img [src]="card.imgUrl" *ngIf="card.imgUrl && !card.hidden">
+  <img src="./../../assets/backCard.png" *ngIf="!card.imgUrl || card.hidden">
+</div>

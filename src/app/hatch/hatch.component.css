@@ -1,0 +1,38 @@
+.hatch-zone {
+  width: 132px;
+  height: 91px;
+
+  padding: 3px;
+  border: 1px solid blue;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  bottom: 5px;
+  left: 5px;
+  position: absolute;
+}
+
+.hatch_down, .hatch_up {
+  position: relative;
+}
+
+.hatch_up app-card {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.cards-container {
+  width: 58px;
+  height: 80px;
+
+  border: 1px dashed gray;
+}
+
+.cards-container img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}

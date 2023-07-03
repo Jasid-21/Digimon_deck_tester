@@ -1,0 +1,119 @@
+.masterContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow-y: hidden;
+  user-select: none;
+}
+
+/**//* Current card section */
+
+.info-container {
+  width: 23%;
+  height: 100%;
+  max-height: 100vh !important;
+
+  background-color: rgba(128, 128, 128, 0.8);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 300px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageContainer > img {
+  max-height: 98% !important;
+  max-width: 98% !important;
+}
+
+.dataContainer {
+  width: calc(100% - 20px);
+  height: calc(100% - 320px);
+  background-color: rgba(168, 168, 168, 0.8);
+  padding: 10px;
+}
+
+.digimonName {
+  width: calc(100% - 20px);
+  height: 30px;
+
+  background-color: gray;
+  color: black;
+  font-weight: 700;
+  font-size: 20px;
+
+  padding: 0px 10px;
+  border-radius: 10px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailsAndEffect {
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+.details {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.effect {
+  width: calc(100% - 10px);
+  max-height: 180px;
+  background-color: rgba(204, 204, 204, 0.7);
+  border-radius: 5px;
+  padding: 5px;
+
+  font-style: italic;
+  text-align: justify;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.effect::-webkit-scrollbar {
+  width: 7px;
+}
+.effect::-webkit-scrollbar-track {
+  width: 7px;
+  background-color: transparent;
+}
+.effect::-webkit-scrollbar-thumb {
+  width: 7px;
+  background-color: rgb(0, 0, 82);
+  border-radius: 5px;
+}
+
+/**//* Tabletop section */
+
+.tabletop-container {
+  flex: 1;
+  height: 100%;
+  max-height: 100vh !important;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabletop {
+  width: 55%;
+  height: 80%;
+  min-width: 500px;
+  min-height: 550px;
+
+  background-color: rgba(255, 255, 255, 0.8);
+
+  display: grid;
+  grid-template-rows: calc(50% - 15px) 30px calc(50% - 15px);
+}

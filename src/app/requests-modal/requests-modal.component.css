@@ -15,10 +15,18 @@
 
 .request-modal {
   width: 200px;
-  height: 300px;
+  height: 200px;
 
   background-color: white;
   box-shadow: 0px 0px 7px 2px black;
   border-radius: 10px;
   padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+span {
+  text-align: center;
 }

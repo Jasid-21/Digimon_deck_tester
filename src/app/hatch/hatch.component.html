@@ -1,0 +1,9 @@
+<div class="hatch-zone">
+  <div class="cards-container hatch_down" (click)="openMenu($event)">
+    <img src="../../assets/backCard.png" *ngIf="hatch_down.cards.length">
+    <app-radial-menu [id]="id" [radius]="50" [items]="menuItems"></app-radial-menu>
+  </div>
+  <div class="cards-container hatch_up">
+    <app-card *ngFor="let c of hatch_up?.stages" [card]="c"></app-card>
+  </div>
+</div>

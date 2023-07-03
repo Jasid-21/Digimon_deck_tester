@@ -9,8 +9,8 @@ export class ModalsService {
   req_room_id: string = '';
 
   hostModal = new BehaviorSubject<boolean>(false);
-  room_id: string = '';
-  username: string = '';
+  host_room_id = new BehaviorSubject<string>('');
+  host_username = new BehaviorSubject<string>('');
 
   constructor() { }
 
@@ -25,8 +25,8 @@ export class ModalsService {
     this.requestModal.next(false);
 
     this.hostModal.next(true);
-    this.room_id = room_id;
-    this.username = username;
+    this.host_room_id.next(room_id);
+    this.host_username.next(username);
   }
 
   closeModals() {
