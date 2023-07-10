@@ -1,0 +1,5 @@
+<div class="digimon" [style]="{ top: digimon.y + 'px', left: digimon.x + 'px'}">
+  <app-radial-menu [id]="digimon.id" [items]="menuRested" *ngIf="digimon.isSuspended()"></app-radial-menu>
+  <app-radial-menu [id]="digimon.id" [items]="menuItems" *ngIf="!digimon.isSuspended()"></app-radial-menu>
+  <app-card [card]="c" *ngFor="let c of digimon.stages"></app-card>
+</div>

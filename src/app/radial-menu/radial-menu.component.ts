@@ -8,10 +8,10 @@ interface menuStyles { top?: string; left?: string; width?: string; height?: str
   styleUrls: ['./radial-menu.component.css']
 })
 export class RadialMenuComponent implements OnInit {
-  @Input() id!: number;
-  @Input() radius!: number;
+  @Input() id!: string;
   @Input() items: menuItem[] = [];
 
+  radius = 50;
   active = true;
   closing = false;
   styles: menuStyles = {};
@@ -44,7 +44,7 @@ export class RadialMenuComponent implements OnInit {
     }
   }
 
-  openMenu(id: number): void {
+  openMenu(id: string): void {
     if (this.id != id) return;
     this.active = true;
     setTimeout(() => {

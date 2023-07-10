@@ -19,8 +19,9 @@ export function duelListeners(socket: Socket, duelState: DuelStateService) {
 
     const deck = data.state.deck.map((c) => new Card(c));
     const hand = data.state.hand.map((c) => new Card(c));
-    duelState.updateDeck(own, deck);
-    duelState.updateHand(own, hand);
+
+    duelState.handleUpdate({ own, deck }, duelState.decks$);
+    duelState.handleUpdate({ own, hand }, duelState.hands$);
   });
 
   socket.on('hatch', (data: {
@@ -28,14 +29,23 @@ export function duelListeners(socket: Socket, duelState: DuelStateService) {
     state: {
       hatch_down: CardInterface[];
       hatch_up: DigimonInterface;
+      digimon: CardInterface[];
     }
 
   }) => {
+    console.log(data);
     const own = socket.id == data.player_id;
     const hatch_down = data.state.hatch_down.map((c) => new Card(c));
-    const digimon = new Digimon(data.state.hatch_up.id, data.state.hatch_up.stages, 'hatch_up');
+    const stages = data.state.digimon.map((c) => new Card(c));
+    const digimon = new Digimon(data.state.hatch_up.id, stages, 'hatch_up');
 
-    duelState.updateHatchDown(own, hatch_down);
-    duelState.updateHatchUp(own, digimon);
+    duelState.handleUpdate({ own, hatch_down }, duelState.hatch_downs$);
+    duelState.handleUpdate({ own, hatch_up: digimon }, duelState.hatch_ups$);
+  });
+
+  socket.on('move-card', (data: {
+
+  }) => {
+
   });
 }

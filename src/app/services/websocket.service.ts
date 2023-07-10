@@ -61,13 +61,14 @@ export class WebsocketService {
       const t = data.players.map((p) => {
         const deck: Card[] = p.deck.map((c: CardInterface) => new Card(c));
         const hatch: Card[] = p.hatch_down.map((c: CardInterface) => new Card(c));
+        const security: Card[] = p.security.map((c: CardInterface) => new Card(c));
         const own: boolean = p.player_id == this.socket.id;
 
-        return { deck, hatch, own };
+        return { deck, hatch, security, own};
       });
 
       t.forEach((el) => {
-        this.duelstate.setPlayerState(el.own, el.deck, el.hatch);
+        this.duelstate.setPlayerState(el.own, el.deck, el.hatch, el.security);
       });
 
       this.duelstate.dueling = true;

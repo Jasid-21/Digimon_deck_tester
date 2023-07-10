@@ -1,11 +1,15 @@
 <div class="field-side" [class.oponent]="!own">
-  <div class="battle-zone" (dragenter)="$event.preventDefault();">
-    <div class="security-zone"></div>
-    <app-hatch [id]="3" [own]="own"></app-hatch>
+  <div class="battle-zone" (dragover)="allowDrop($event)" (drop)="dropCard($event)">
+    <app-security [id]="security_id" [own]="own"></app-security>
+    <app-hatch [id]="hatch_id" [own]="own"></app-hatch>
+
+    <div class="digimon" *ngFor="let d of digimon_list">
+      <app-card [card]="c" *ngFor="let c of d.stages"></app-card>
+    </div>
   </div>
   <div class="pile-zone">
-    <app-deck [own]="own" [id]="1"></app-deck>
+    <app-deck [own]="own" [id]="deck_id"></app-deck>
     <div class="cards-container drop"></div>
   </div>
-  <app-hand [own]="own" [id]="2"></app-hand>
+  <app-hand [own]="own" [id]="hand_id"></app-hand>
 </div>

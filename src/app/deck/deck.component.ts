@@ -12,8 +12,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./deck.component.css']
 })
 export class DeckComponent implements OnInit {
+  @Input() id!: string;
   @Input() own!: boolean;
-  @Input() id!: number;
 
   @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
   menuItems: menuItem[] = [];
@@ -43,9 +43,9 @@ export class DeckComponent implements OnInit {
     this.menuItems.push(...items);
   }
 
-  openMenu(event: MouseEvent, id: number) {
+  openMenu(event: MouseEvent) {
     event.stopPropagation();
-    this.radial.openMenu(id);
+    this.radial.openMenu(this.id);
   }
 
   drawCard() {

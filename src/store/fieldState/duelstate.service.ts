@@ -24,12 +24,14 @@ export class DuelStateService implements OnInit {
     this.current_card.next(card);
   }
 
-  setPlayerState(own: boolean, deck: Card[], hatch: Card[]) {
+  setPlayerState(own: boolean, deck: Card[], hatch: Card[], security: Card[]) {
     const prevDecks = this.decks$.getValue();
     const prevHatch = this.hatch_downs$.getValue();
+    const prevSecurity = this.securities$.getValue();
 
     this.decks$.next([...prevDecks, { own, deck }]);
     this.hatch_downs$.next([...prevHatch, { own, hatch_down: hatch }]);
+    this.securities$.next([...prevSecurity, { own, security }]);
 
     this.setAllDefault();
   }
@@ -54,50 +56,15 @@ export class DuelStateService implements OnInit {
       { own: true, field: [] },
       { own: false, field: [] },
     ]);
-
-    this.securities$.next([
-      { own: true, security: [] },
-      { own: false, security: [] },
-    ]);
   }
 
-  updateDeck(own: boolean, deck: Card[]) {
-    const state = this.decks$.getValue();
+  handleUpdate(payload: { own: boolean; [key: string]: any }, place$: BehaviorSubject<any[]>) {
+    const state = place$.getValue();
 
-    const i = state.findIndex((d) => d.own == own);
+    const i = state.findIndex((v) => v.own == payload.own);
     if (i < 0) return;
 
-    state.splice(i, 1, { own, deck });
-    this.decks$.next(state);
-  }
-
-  updateHand(own: boolean, hand: Card[]) {
-    const state = this.hands$.getValue();
-
-    const i = state.findIndex((d) => d.own == own);
-    if (i < 0) return;
-
-    state.splice(i, 1, { own, hand });
-    this.hands$.next(state);
-  }
-
-  updateHatchDown(own: boolean, hatch: Card[]) {
-    const state = this.hatch_downs$.getValue();
-
-    const i = state.findIndex((d) => d.own == own);
-    if (i < 0) return;
-
-    state.splice(i, 1, { own, hatch_down: hatch });
-    this.hatch_downs$.next(state);
-  }
-
-  updateHatchUp(own: boolean, hatch: Digimon) {
-    const state = this.hatch_ups$.getValue();
-
-    const i = state.findIndex((d) => d.own == own);
-    if (i < 0) return;
-
-    state.splice(i, 1, { own, hatch_up: hatch });
-    this.hatch_ups$.next(state);
+    state.splice(i, 1, payload);
+    place$.next(state);
   }
 }

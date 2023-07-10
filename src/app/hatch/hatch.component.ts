@@ -15,7 +15,7 @@ import { WebsocketService } from '../services/websocket.service';
 export class HatchComponent implements OnInit {
   @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
   @Input() own!: boolean;
-  @Input() id!: number;
+  @Input() id!: string;
   menuItems: menuItem[] = [];
 
   hatch_down: Deck = new Deck();

@@ -1,4 +1,6 @@
-<div class="card" *ngIf="card" (mousemove)="setAsCurrent()">
+<div class="card" *ngIf="card" draggable="true"
+(mousemove)="setAsCurrent()" (dragstart)="loadToMove($event)">
   <img [src]="card.imgUrl" *ngIf="card.imgUrl && !card.hidden">
   <img src="./../../assets/backCard.png" *ngIf="!card.imgUrl || card.hidden">
+  <app-radial-menu [id]="card.id" [items]="menuItems"></app-radial-menu>
 </div>

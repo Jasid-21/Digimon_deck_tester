@@ -27,6 +27,8 @@ import { RadialMenuComponent } from './radial-menu/radial-menu.component';
 import { DeckComponent } from './deck/deck.component';
 import { HandComponent } from './hand/hand.component';
 import { HatchComponent } from './hatch/hatch.component';
+import { SecurityComponent } from './security/security.component';
+import { DigimonComponent } from './digimon/digimon.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { HatchComponent } from './hatch/hatch.component';
     DeckComponent,
     HandComponent,
     HatchComponent,
+    SecurityComponent,
+    DigimonComponent,
   ],
   imports: [
     FormsModule,

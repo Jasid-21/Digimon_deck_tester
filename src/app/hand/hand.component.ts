@@ -8,8 +8,8 @@ import { DuelStateService } from 'src/store/fieldState/duelstate.service';
   styleUrls: ['./hand.component.css']
 })
 export class HandComponent implements OnInit {
+  @Input() id!: string;
   @Input() own!: boolean;
-  @Input() id!: number;
 
   hand: Hand = new Hand([]);
 

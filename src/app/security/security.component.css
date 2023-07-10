@@ -1,0 +1,25 @@
+.security-zone {
+  width: 85px;
+  height: 140px;
+  position: absolute;
+
+  border: 1px solid green;
+  top: 5px;
+  left: 5px;
+
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.security-zone app-card {
+  top: 0px;
+  left: 0px;
+  rotate: -90deg;
+  margin-bottom: -66px;
+}
+
+.security-zone app-card:first-of-type {
+  margin-bottom: -11px !important;
+}

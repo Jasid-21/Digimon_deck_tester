@@ -13,8 +13,6 @@ import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent implements OnInit {
-  @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
-
   username: string = 'Player';
   chosen_deck: string = '';
   code_decks: codeDeck[] = [];
@@ -40,10 +38,6 @@ export class RoomsComponent implements OnInit {
   startFakeDuel() {
     const code_deck = this.decksServ.getCodeDecks()[0].code_deck;
     this.socket.startFakeDuel(code_deck);
-  }
-
-  openMenu(id: number) {
-    this.radial.openMenu(id);
   }
 
   refreshRooms() {

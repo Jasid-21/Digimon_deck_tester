@@ -62,6 +62,9 @@ export interface RawCard {
 export interface DigimonInterface {
   id: string;
   stages: Card[];
+  place: PlacesType;
+  x: number;
+  y: number;
 }
 
 export interface codeDeck {
