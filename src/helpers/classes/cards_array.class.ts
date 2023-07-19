@@ -1,31 +1,43 @@
+import { BehaviorSubject } from "rxjs";
 import { PlacesType } from "../interfaces";
 import { Card } from "./card.class";
 
 export class CardsArray {
-  name: PlacesType;
-  cards: Card[] = [];
+  cards$ = new BehaviorSubject<Card[]>([]);
 
-  constructor(cards: Card[], name: PlacesType) {
-    this.name = name;
-    this.cards = cards;
+  updateCards(cards: Card[]) {
+    this.cards$.next(cards);
+    return this.cards$.value;
   }
 
-  setCards(cards: Card[]) {
-    this.cards = cards;
+  removeLast(): Card | undefined {
+    const current = this.cards$.value;
+    const card = current.pop();
+    if (!card) return;
+
+    this.cards$.next(current);
+    return card;
   }
 
-  addToLast(card: Card, faceDown: boolean): void {
-    card.faceDown = faceDown;
-    this.cards.push(card);
+  addCard(card: Card): Card[] {
+    const current = this.cards$.value;
+    this.cards$.next([...current, card]);
+
+    return this.cards$.value;
   }
 
-  addToStart(card: Card): void {
-    this.cards.splice(0, 0, card);
+  findCardById(id: string): Card | undefined {
+    const current = this.cards$.value;
+    return current.find((c) => c.id == id);
   }
 
-  removeById(id: string): Card | void {
-    const index = this.cards.findIndex(c => c.id == id);
-    if (index <= 0) return;
-    return this.cards.splice(index, 1)[0];
+  removeCardById(id: string): Card | undefined {
+    const current = this.cards$.value;
+    const index = current.findIndex((c) => c.id == id);
+    if (index < 0) return;
+
+    const card = current.splice(index, 1);
+    this.cards$.next(current);
+    return card[0];
   }
 }

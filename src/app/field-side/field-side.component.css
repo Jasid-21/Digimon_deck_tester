@@ -2,7 +2,7 @@
   width: calc(100% - 2px);
   height: calc(100% - 2px);
 
-  border: 1px solid red;
+  border: 1px solid rgb(94, 94, 94);
   position: relative;
 
   display: flex;
@@ -42,4 +42,8 @@
   height: 100%;
 
   position: relative;
+}
+
+.highlight {
+  box-shadow: 0px 0px 4px 1px yellow;
 }

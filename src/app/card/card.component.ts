@@ -42,7 +42,8 @@ export class CardComponent implements OnInit {
   }
 
   loadToMove(event: DragEvent) {
-    event.dataTransfer?.setData('card', JSON.stringify(this.card));
+    event.dataTransfer?.setData('card_id', this.card.id);
+    event.dataTransfer?.setData('card_place', this.card.place);
     event.stopPropagation();
   }
 }

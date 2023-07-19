@@ -6,6 +6,8 @@ import { DuelStateService } from 'src/store/fieldState/duelstate.service';
 import { faEgg } from '@fortawesome/free-solid-svg-icons';
 import { RadialMenuComponent } from '../radial-menu/radial-menu.component';
 import { WebsocketService } from '../services/websocket.service';
+import { Card } from 'src/helpers/classes/card.class';
+import { HatchsServiceService } from 'src/store/fieldState/hatchs-service.service';
 
 @Component({
   selector: 'app-hatch',
@@ -18,11 +20,11 @@ export class HatchComponent implements OnInit {
   @Input() id!: string;
   menuItems: menuItem[] = [];
 
-  hatch_down: Deck = new Deck();
+  hatch_down: Card[] = []
   hatch_up: Digimon | null = null;
 
   constructor(
-    private duelState: DuelStateService,
+    private hatchsService: HatchsServiceService,
     private socket: WebsocketService,
   ) {}
 
@@ -30,21 +32,10 @@ export class HatchComponent implements OnInit {
     const items: menuItem[] = [
       { name: 'Hatch', icon: faEgg, action: this.hatch.bind(this) },
     ];
-
     this.menuItems.push(...items);
 
-    this.duelState.hatch_downs$.subscribe((v) => {
-      const hatch = v.find((h) => h.own == this.own);
-      if (!hatch) return;
-      this.hatch_down.setDeck(hatch.hatch_down);
-    });
-
-    this.duelState.hatch_ups$.subscribe((v) => {
-      const h = v.find((h) => h.own == this.own);
-      if (!h) return;
-      h.hatch_up?.stages.forEach((c) => c.hidden = false);
-      this.hatch_up = h.hatch_up;
-    });
+    this.hatchsService.findHatchDown(this.own)?.cards$.subscribe((v) => this.hatch_down = v);
+    this.hatchsService.findHatchUp(this.own)?.digimon.subscribe((v) => this.hatch_up = v);
   }
 
   openMenu(event: MouseEvent) {

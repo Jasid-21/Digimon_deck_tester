@@ -4,6 +4,8 @@
   display: flex;
   overflow-y: hidden;
   user-select: none;
+
+  background-color: rgba(77, 77, 77, 0.65);
 }
 
 /**//* Current card section */
@@ -112,7 +114,9 @@
   min-width: 500px;
   min-height: 550px;
 
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(224, 224, 224, 0.5);
+  border: 1px solid rgb(88, 88, 88);
+  box-shadow: 0px 0px 4px 1px white;
 
   display: grid;
   grid-template-rows: calc(50% - 15px) 30px calc(50% - 15px);

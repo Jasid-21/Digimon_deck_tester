@@ -5,6 +5,8 @@ import { DuelStateService } from 'src/store/fieldState/duelstate.service';
 import { RadialMenuComponent } from '../radial-menu/radial-menu.component';
 import { menuItem } from 'src/helpers/interfaces';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { DecksServiceService } from 'src/store/fieldState/decks-service.service';
+import { Card } from 'src/helpers/classes/card.class';
 
 @Component({
   selector: 'app-deck',
@@ -18,20 +20,17 @@ export class DeckComponent implements OnInit {
   @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
   menuItems: menuItem[] = [];
 
-  deck: Deck = new Deck();
+  //deck!: Deck | undefined;
+  cards: Card[] = [];
 
   constructor(
-    private socket: WebsocketService,
-    private duelState: DuelStateService,
+    private socketService: WebsocketService,
+    private decksService: DecksServiceService,
   ) {}
 
   ngOnInit(): void {
-    this.duelState.decks$.subscribe((v) => {
-      const d = v.find((d) => d.own == this.own);
-      if (!d) return;
-
-      this.deck.setDeck(d.deck);
-    });
+    this.decksService.decks.find((d) => d.own == this.own)?.deck.cards$
+    .subscribe((v) => this.cards = v);
 
     const items: menuItem[] = [
       {
@@ -49,6 +48,10 @@ export class DeckComponent implements OnInit {
   }
 
   drawCard() {
-    this.socket.drawCard();
+    this.socketService.drawCard();
+  }
+
+  showCards() {
+    alert(this.cards.length);
   }
 }

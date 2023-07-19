@@ -1,6 +1,6 @@
 <div class="hatch-zone">
   <div class="cards-container hatch_down" (click)="openMenu($event)">
-    <img src="../../assets/backCard.png" *ngIf="hatch_down.cards.length">
+    <img src="../../assets/backCard.png" *ngIf="hatch_down.length">
     <app-radial-menu [id]="id" [items]="menuItems"></app-radial-menu>
   </div>
   <div class="cards-container hatch_up">

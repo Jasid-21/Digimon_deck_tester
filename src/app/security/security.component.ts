@@ -3,6 +3,8 @@ import { Deck } from 'src/helpers/classes/deck.class';
 import { DuelStateService } from 'src/store/fieldState/duelstate.service';
 import { RadialMenuComponent } from '../radial-menu/radial-menu.component';
 import { menuItem } from 'src/helpers/interfaces';
+import { Card } from 'src/helpers/classes/card.class';
+import { SecuritiesServiceService } from 'src/store/fieldState/securities-service.service';
 
 @Component({
   selector: 'app-security',
@@ -16,23 +18,18 @@ export class SecurityComponent implements OnInit {
   @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
   menuItems: menuItem[] = [];
 
-  security: Deck = new Deck();
+  cards: Card[] = [];
   margin: number = 60;
 
   constructor(
-    private duelState: DuelStateService,
+    private securitiesService: SecuritiesServiceService,
   ) {}
 
   ngOnInit(): void {
-    this.duelState.securities$.subscribe((v) => {
-      const s = v.find((s) => s.own == this.own);
-      if (!s) return;
+    this.securitiesService.findSecurity(this.own)?.cards$.subscribe((v) => {
+      this.cards = v;
 
-      console.log(s);
-      this.security.setDeck(s.security);
-
-      // Make margin bottom calculation.
-      const n = s.security.length;
+      const n = v.length;
       if (n > 5) {
         this.margin = (140 - 58 * n) / (n - 1) - 22;
         return;

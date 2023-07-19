@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Card } from 'src/helpers/classes/card.class';
 import { Hand } from 'src/helpers/classes/hand.class';
 import { DuelStateService } from 'src/store/fieldState/duelstate.service';
+import { HandsServiceService } from 'src/store/fieldState/hands-service.service';
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-hand',
@@ -11,25 +14,14 @@ export class HandComponent implements OnInit {
   @Input() id!: string;
   @Input() own!: boolean;
 
-  hand: Hand = new Hand([]);
+  cards: Card[] = [];
 
   constructor(
-    private duelState: DuelStateService,
+    private handsService: HandsServiceService,
+    private socketService: WebsocketService,
   ) {}
 
   ngOnInit(): void {
-    this.duelState.hands$.subscribe((v) => {
-      const hand = v.find((h) => h.own == this.own);
-      console.log(hand);
-      if (!hand) return;
-
-      if (hand.own) {
-        hand.hand.forEach((c) => c.hidden = false);
-      } else {
-        hand.hand.forEach((c) => c.hidden = true);
-      }
-
-      this.hand.setCards(hand.hand);
-    });
+    this.handsService.findHand(this.own)?.cards$.subscribe((v) => this.cards = v) ;
   }
 }

@@ -20,7 +20,6 @@ import { RequestsModalComponent } from './requests-modal/requests-modal.componen
 import { HostModalComponent } from './host-modal/host-modal.component';
 import { DuelComponent } from './duel/duel.component';
 import { FieldSideComponent } from './field-side/field-side.component';
-import { fieldReducer } from 'src/store/fieldStore/field.reducers';
 import { DuelStateService } from 'src/store/fieldState/duelstate.service';
 import { CardComponent } from './card/card.component';
 import { RadialMenuComponent } from './radial-menu/radial-menu.component';
@@ -58,7 +57,6 @@ import { DigimonComponent } from './digimon/digimon.component';
     StoreModule.forRoot({
       cards: cardsReducer,
       raw_decks: rawDecksReducer,
-      field: fieldReducer,
     }),
     SweetAlert2Module.forRoot(),
     FontAwesomeModule

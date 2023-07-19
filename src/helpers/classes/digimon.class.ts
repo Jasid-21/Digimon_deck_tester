@@ -17,6 +17,10 @@ export class Digimon {
     this.y = y;
   }
 
+  digiEvolve(stage: Card) {
+    this.stages.push(stage);
+  }
+
   suspend_unsuspend(): void {
     const card: Card = this.stages[this.stages.length - 1];
     card.rotate();

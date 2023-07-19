@@ -3,6 +3,8 @@ import { DuelStateService } from 'src/store/fieldState/duelstate.service';
 import { WebsocketService } from '../services/websocket.service';
 import { random_code } from 'src/helpers/functions/random_code.function';
 import { Digimon } from 'src/helpers/classes/digimon.class';
+import { FieldsServiceService } from 'src/store/fieldState/fields-service.service';
+import { PlacesType } from 'src/helpers/interfaces';
 
 @Component({
   selector: 'app-field-side',
@@ -16,22 +18,31 @@ export class FieldSideComponent implements OnInit {
   hand_id = random_code(6);
   hatch_id = random_code(6);
   security_id = random_code(6);
+  highlight = false;
 
-  digimon_list: Digimon[] = [];
+  digimons: Digimon[] = [];
 
   constructor(
-    private duelstate: DuelStateService,
     private socket: WebsocketService,
+    private fieldsService: FieldsServiceService,
   ) {};
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fieldsService.findField(this.own)?.digimons.subscribe((v) => this.digimons = v);
+  }
 
   allowDrop(event: DragEvent) {
     event.preventDefault();
   }
 
   dropCard(event: DragEvent) {
-    const card = event.dataTransfer?.getData('card');
-    console.log(card);
+    const card_id = event.dataTransfer?.getData('card_id');
+    const card_place = event.dataTransfer?.getData('card_place');
+    if (!card_id || !card_place) return;
+
+    const x = event.offsetX;
+    const y = event.offsetY
+
+    this.socket.moveCard(card_id, card_place, 'field', x, y);
   }
 }

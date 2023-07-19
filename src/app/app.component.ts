@@ -19,14 +19,11 @@ export class AppComponent implements OnInit {
 
   cards$ = this.store.pipe(select(selectCards))
   .subscribe((v) => {
-    console.log(v.length);
-
     const decks: SavedRawDeck[] = [];
       for (let d of this.code_decks) {
         const deck = this.decks_serv.generateDeck(d.code_deck);
         decks.push({ name: d.name, raw_deck: deck });
       }
-      console.log(decks);
 
       this.store.dispatch(setRawDecks({ decks }));
   });

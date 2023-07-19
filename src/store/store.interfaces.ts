@@ -26,3 +26,8 @@ export interface PlayerState {
 export interface FieldState {
   field: PlayerState[],
 }
+
+export interface ZoneService {
+  removeById(own: boolean, id: string): Card | Digimon | undefined;
+  addCard(own: boolean, card: Card, x?: number, y?: number): void;
+}

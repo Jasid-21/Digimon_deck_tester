@@ -24,4 +24,16 @@ export class DuelComponent implements OnInit {
       this.router.navigate(['/rooms']);
     }
   };
+
+  handleClick(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const active = this.duelState.checkHighlight();
+    if (!active) return;
+
+    const target = event.target as HTMLElement;
+    if (!target.classList.contains(active)) return;
+
+    alert(active);
+  }
 }

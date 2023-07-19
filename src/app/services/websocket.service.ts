@@ -63,12 +63,12 @@ export class WebsocketService {
         const hatch: Card[] = p.hatch_down.map((c: CardInterface) => new Card(c));
         const security: Card[] = p.security.map((c: CardInterface) => new Card(c));
         const own: boolean = p.player_id == this.socket.id;
-
         return { deck, hatch, security, own};
       });
 
       t.forEach((el) => {
-        this.duelstate.setPlayerState(el.own, el.deck, el.hatch, el.security);
+        console.log(el.deck);
+        this.duelstate.setPlayerState(el.own, el.deck, el.hatch);
       });
 
       this.duelstate.dueling = true;
@@ -142,6 +142,7 @@ export class WebsocketService {
     });
   }
 
+  //* Duel emiter section
   drawCard() {
     this.socket.emit('draw-card',
       { player_id: this.socket.id, room_id: this.duelstate.room_id }
@@ -154,7 +155,10 @@ export class WebsocketService {
     );
   }
 
-  moveCard(c: Card, dest: PlacesType) {
-    this.socket.emit('move-card', { id: c.id, origin: c.place, dest });
+  moveCard(card_id: string, origin: string, destiny: PlacesType, x?: number, y?: number) {
+    this.socket.emit('move-card', {
+      room_id: this.duelstate.room_id,
+      card_id, origin, destiny, x, y,
+    });
   }
 }
