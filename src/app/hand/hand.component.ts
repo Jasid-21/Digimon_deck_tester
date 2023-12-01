@@ -22,6 +22,17 @@ export class HandComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.handsService.findHand(this.own)?.cards$.subscribe((v) => this.cards = v) ;
+    this.handsService.findHand(this.own)?.cards$.subscribe((v) => {
+      this.setHandProperties(v);
+      this.cards = v
+    });
+  }
+
+  setHandProperties(cards: Card[]) {
+    cards.forEach((c) => {
+      c.place = 'hand';
+      c.rested = false;
+      c.faceDown = false;
+    });
   }
 }

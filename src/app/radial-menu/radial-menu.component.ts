@@ -38,10 +38,8 @@ export class RadialMenuComponent implements OnInit {
   @HostListener('document:click', ['$event.target'])
   detectClick(target: EventTarget) {
     const inside = this.elementRef.nativeElement.contains(target);
-    console.log(inside);
-    if (!inside) {
-      this.closeMenu();
-    }
+    if (inside) return;
+    this.closeMenu();
   }
 
   openMenu(id: string): void {

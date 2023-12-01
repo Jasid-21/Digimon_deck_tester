@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { SavedDecksService } from './services/saved-decks.service';
-import { SavedRawDeck, codeDeck } from 'src/helpers/interfaces';
+import { RawCard, SavedRawDeck, codeDeck } from 'src/helpers/interfaces';
 import { AppState } from 'src/store/app.state';
 import { setRawDecks } from 'src/store/rawDecksStore/rawDecks.actions';
 import { selectCards } from 'src/store/cardsStore/cards.selectors';
 import { setBuilderCards } from 'src/store/cardsStore/cards.actions';
+import j_database from 'src/json/database.json';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -36,9 +37,12 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.code_decks = this.decks_serv.getCodeDecks();
 
+    /*
     const url = `${environment.apiUrl}deck-builder`;
     const resp = await fetch(url);
     const json = await resp.json();
+    */
+   const json: RawCard[] = j_database;
 
     this.store.dispatch(setBuilderCards({ cards: json }));
   }

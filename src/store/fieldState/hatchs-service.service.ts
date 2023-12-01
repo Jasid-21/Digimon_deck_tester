@@ -24,6 +24,7 @@ export class HatchsServiceService {
     const hatch = this.findHatchDown(own);
     if (!hatch) return;
 
+    this.setHatchDownProperties(cards);
     hatch.updateHatchDown(own, cards);
   }
 
@@ -62,5 +63,19 @@ export class HatchsServiceService {
   findHatchUp(own: boolean): HatchUp | undefined {
     const hatch = this.hatchUps.find((h) => h.own == own)?.hatch;
     return hatch;
+  }
+
+  setHatchDownProperties(cards: Card[]): void {
+    cards.forEach((c) => {
+      c.place = 'hatch_down';
+      c.faceDown = true;
+      c.rested = false;
+    });
+  }
+
+  setHatchUpProperties(digimon: Digimon): void {
+    digimon.place = 'hatch_up';
+    digimon.x = 0;
+    digimon.y = 0;
   }
 }

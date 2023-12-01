@@ -19,10 +19,14 @@ export class CardsArray {
     return card;
   }
 
-  addCard(card: Card): Card[] {
+  addCard(card: Card, bottom: boolean = false): Card[] {
     const current = this.cards$.value;
-    this.cards$.next([...current, card]);
 
+    if (bottom) {
+      this.cards$.next([card, ...current]);
+    } else {
+      this.cards$.next([...current, card]);
+    }
     return this.cards$.value;
   }
 

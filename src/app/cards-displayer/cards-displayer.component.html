@@ -1,0 +1,6 @@
+<div class="cards-displayer" *ngIf="cards.length">
+  <button class="close-btn" (click)="closeDisplayer()">
+    <fa-icon [icon]="fax"></fa-icon>
+  </button>
+  <app-card [card]="c" *ngFor="let c of cards" ></app-card>
+</div>

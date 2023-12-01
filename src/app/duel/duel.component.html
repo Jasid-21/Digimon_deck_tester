@@ -1,4 +1,4 @@
-<div class="masterContainer" (click)="handleClick($event)">
+<div class="masterContainer">
   <div class="info-container">
     <div class="imageContainer">
       <img src="./../../assets/backCard.png" *ngIf="!current">
@@ -38,5 +38,6 @@
       <div class="memory-container"></div>
       <app-field-side [own]="true"></app-field-side>
     </div>
+    <app-cards-displayer></app-cards-displayer>
   </div>
 </div>

@@ -35,7 +35,10 @@ export class HatchComponent implements OnInit {
     this.menuItems.push(...items);
 
     this.hatchsService.findHatchDown(this.own)?.cards$.subscribe((v) => this.hatch_down = v);
-    this.hatchsService.findHatchUp(this.own)?.digimon.subscribe((v) => this.hatch_up = v);
+    this.hatchsService.findHatchUp(this.own)?.digimon.subscribe((v) => {
+      this.setHatchProperties(v);
+      this.hatch_up = v
+    });
   }
 
   openMenu(event: MouseEvent) {
@@ -46,5 +49,16 @@ export class HatchComponent implements OnInit {
   hatch() {
     if (this.hatch_up) return;
     this.socket.hatchDigimon();
+  }
+
+  setHatchProperties(digimon: Digimon | null) {
+    if (!digimon) return;
+
+    digimon.place = 'hatch_up';
+    digimon.stages.forEach((c) => {
+      c.place = 'digimon';
+      c.rested = false;
+      c.faceDown = false;
+    });
   }
 }

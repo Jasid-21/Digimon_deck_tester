@@ -28,6 +28,7 @@ import { HandComponent } from './hand/hand.component';
 import { HatchComponent } from './hatch/hatch.component';
 import { SecurityComponent } from './security/security.component';
 import { DigimonComponent } from './digimon/digimon.component';
+import { CardsDisplayerComponent } from './cards-displayer/cards-displayer.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { DigimonComponent } from './digimon/digimon.component';
     HatchComponent,
     SecurityComponent,
     DigimonComponent,
+    CardsDisplayerComponent,
   ],
   imports: [
     FormsModule,

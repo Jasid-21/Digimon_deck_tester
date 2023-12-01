@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Card } from 'src/helpers/classes/card.class';
 import { Digimon } from 'src/helpers/classes/digimon.class';
 import { BehaviorSubject } from 'rxjs';
@@ -8,8 +8,8 @@ import { HatchsServiceService } from './hatchs-service.service';
 import { SecuritiesServiceService } from './securities-service.service';
 import { FieldsServiceService } from './fields-service.service';
 import { PlacesType } from 'src/helpers/interfaces';
-import { Deck } from 'src/helpers/classes/deck.class';
 import { ZoneService } from '../store.interfaces';
+import { CardsDisplayerService } from './cards-displayer.service';
 
 @Injectable()
 export class DuelStateService {
@@ -36,7 +36,20 @@ export class DuelStateService {
     private hatchsService: HatchsServiceService,
     private securitiesService: SecuritiesServiceService,
     private fieldsService: FieldsServiceService,
+    private displayerService: CardsDisplayerService,
   ) {}
+
+  revealCard(card: Card): void {
+    this.displayerService.addCard(card);
+  }
+
+  stopRevealing(own: boolean): void {
+    const cards: Card[] = this.displayerService.resetCards();
+    for (var card of cards) {
+      const destinyServ = this.services[card.place];
+      destinyServ?.addCard(own, card);
+    }
+  }
 
   moveCard(
     own: boolean,
@@ -58,14 +71,6 @@ export class DuelStateService {
       return;
     }
     destinyServ.addCard(own, card);
-  }
-
-  checkHighlight() {
-    return this.highlight.find((h) => h.value.value)?.name;
-  }
-
-  disableHighlights() {
-    this.highlight.forEach((h) => h.value.next(false));
   }
 
   setCurrentCard(card: Card) {
@@ -96,6 +101,22 @@ export class DuelStateService {
     if (!card) return;
     console.log("Defined xd");
     this.handsService.addCard(own, card);
+  }
+
+  revealTopDeck(own: boolean) {
+    const card = this.decksService.drawCard(own);
+    if (!card) return;
+
+    this.displayerService.addCard(card);
+  }
+
+  resetCardsDisplayer(player_id: string) {
+    const cards = this.displayerService.resetCards();
+    cards.forEach((c) => {
+      const own = c.player == player_id;
+      const destService = this.services[c.place];
+      destService?.addCard(own, c);
+    });
   }
 
   hatchDigimon(own: boolean) {

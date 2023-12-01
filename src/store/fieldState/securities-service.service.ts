@@ -13,14 +13,29 @@ export class SecuritiesServiceService implements ZoneService {
     { own: false, security: new Security() },
   ];
   constructor() { }
-  addCard(own: boolean, entity: Card | Digimon): void {
-    throw new Error('Method not implemented.');
+  addCard(own: boolean, entity: Card | Digimon): Card[] | undefined {
+    const security = this.findSecurity(own);
+    if (!security) return;
+
+    if (entity instanceof Card) {
+      this.setSecurityProperties([entity]);
+      security.addCard(entity);
+      return;
+    }
+
+    const card = entity.stages.pop();
+    if (!card) return;
+
+    this.setSecurityProperties([card]);
+    security.addCard(card);
+    return entity.stages;
   }
 
   updateSecurity(own: boolean, cards: Card[]) {
     const security = this.findSecurity(own);
     if (!security) return;
 
+    this.setSecurityProperties(cards);
     security.updateSecurity(cards);
   }
 
@@ -45,15 +60,16 @@ export class SecuritiesServiceService implements ZoneService {
     return security.removeCardById(id);
   }
 
-  addToLast(own: boolean, card: Card) {
-    const security = this.findSecurity(own);
-    if (!security) return;
-
-    security.addCard(card);
-  }
-
   findSecurity(own: boolean): Security | undefined {
     const security = this.securities.find((s) => s.own == own)?.security;
     return security;
+  }
+
+  setSecurityProperties(cards: Card[]) {
+    cards.forEach((c) => {
+      c.place = 'security';
+      c.rested = false;
+      c.faceDown = true;
+    });
   }
 }

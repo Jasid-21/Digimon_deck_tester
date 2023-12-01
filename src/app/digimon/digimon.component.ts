@@ -44,4 +44,13 @@ export class DigimonComponent implements OnInit {
   attack() {
 
   }
+
+  setStagesProperties() {
+    this.digimon.stages.forEach((s) => {
+      s.place = 'digimon';
+      s.rested = false;
+      s.faceDown = false;
+      s.hidden = false;
+    });
+  }
 }

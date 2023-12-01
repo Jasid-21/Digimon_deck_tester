@@ -161,4 +161,10 @@ export class WebsocketService {
       card_id, origin, destiny, x, y,
     });
   }
+
+  revealTopDeck() {
+    this.socket.emit('reveal-top-deck',
+      { room_id: this.duelstate.room_id }
+    );
+  }
 }

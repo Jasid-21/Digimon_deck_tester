@@ -40,21 +40,21 @@ export interface RawCard {
   type: string;
   color: string;
 
-  stage: string;
-  digi_type: string;
-  attribute: string;
+  stage: string | null;
+  digi_type: string | null;
+  attribute: string | null;
 
-  level: number;
-  play_cost: number;
-  evolution_cost: number;
+  level: number | null;
+  play_cost: number | null;
+  evolution_cost: number | null;
 
-  cardrarity: string;
-  artist: string;
-  dp: number;
+  cardrarity: string | null;
+  artist: string | null;
+  dp: number | null;
   cardnumber: string;
   maineffect: string | null;
   soureeffect: string | null;
-  set_name: string;
+  set_name: string | null;
   card_sets: string[];
   image_url: string;
 }

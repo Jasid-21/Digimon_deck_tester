@@ -1,10 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Deck } from 'src/helpers/classes/deck.class';
 import { WebsocketService } from '../services/websocket.service';
-import { DuelStateService } from 'src/store/fieldState/duelstate.service';
 import { RadialMenuComponent } from '../radial-menu/radial-menu.component';
 import { menuItem } from 'src/helpers/interfaces';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEye } from '@fortawesome/free-solid-svg-icons';
 import { DecksServiceService } from 'src/store/fieldState/decks-service.service';
 import { Card } from 'src/helpers/classes/card.class';
 
@@ -20,7 +18,6 @@ export class DeckComponent implements OnInit {
   @ViewChild(RadialMenuComponent) radial!: RadialMenuComponent;
   menuItems: menuItem[] = [];
 
-  //deck!: Deck | undefined;
   cards: Card[] = [];
 
   constructor(
@@ -30,7 +27,9 @@ export class DeckComponent implements OnInit {
 
   ngOnInit(): void {
     this.decksService.decks.find((d) => d.own == this.own)?.deck.cards$
-    .subscribe((v) => this.cards = v);
+    .subscribe((v) => {
+      this.cards = v
+    });
 
     const items: menuItem[] = [
       {
@@ -38,6 +37,12 @@ export class DeckComponent implements OnInit {
         icon: faPlus,
         action: this.drawCard.bind(this),
       },
+
+      {
+        name: 'Reveal_Top',
+        icon: faEye,
+        action: this.revealTop.bind(this),
+      }
     ];
     this.menuItems.push(...items);
   }
@@ -53,5 +58,9 @@ export class DeckComponent implements OnInit {
 
   showCards() {
     alert(this.cards.length);
+  }
+
+  revealTop(): void {
+    this.socketService.revealTopDeck();
   }
 }

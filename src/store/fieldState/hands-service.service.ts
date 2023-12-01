@@ -16,13 +16,14 @@ export class HandsServiceService implements ZoneService {
   constructor() {}
   addCard(own: boolean, card: Card): void {
     const hand = this.findHand(own);
-    console.log(hand);
     if (!hand) return;
 
+    this.setHandProperties([card]);
     hand.addToHand(own, card);
   }
 
-  updateHand(own: boolean, cards: Card[]) {
+  updateHand(own: boolean, cards: Card[]): void {
+    this.setHandProperties(cards);
     const hand = this.findHand(own);
     hand?.setCards(cards);
   }
@@ -37,5 +38,13 @@ export class HandsServiceService implements ZoneService {
   findHand(own: boolean): Hand | undefined {
     const hand = this.hands.find((h) => h.own == own)?.hand;
     return hand;
+  }
+
+  setHandProperties(cards: Card[]): void {
+    cards.forEach((c) => {
+      c.place = 'hand';
+      c.faceDown = false;
+      c.rested = false;
+    });
   }
 }

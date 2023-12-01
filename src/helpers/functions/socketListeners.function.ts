@@ -28,4 +28,9 @@ export function duelListeners(socket: Socket, duelState: DuelStateService) {
     const own = socket.id == data.player_id;
     duelState.moveCard(own, data.origin, data.destiny, data.card_id, data.x, data.y);
   });
+
+  socket.on('reveal-top-deck', (data: { player_id: string }) => {
+    const own = socket.id == data.player_id;
+    duelState.revealTopDeck(own);
+  });
 }

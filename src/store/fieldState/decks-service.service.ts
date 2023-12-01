@@ -21,23 +21,37 @@ export class DecksServiceService implements ZoneService {
     return deck.removeCardById(id);
   }
 
-  addCard(own: boolean, entity: Card | Digimon): void {
+  addCard(own: boolean, entity: Card | Digimon): Card[] | undefined {
     const deck = this.findDeck(own);
     if (!deck) return;
 
     if (entity instanceof Card) {
+      this.setDeckProperties([entity]);
       deck.addCard(entity);
       return;
     }
 
-    entity.stages.forEach((s) => deck.addCard(s));
+    const card = entity.stages.pop();
+    if (!card) return;
+
+    this.setDeckProperties([card]);
+    deck.addCard(card);
+    return entity.stages;
+  }
+
+  addToBottom(own: boolean, cards: Card[]): void {
+    const deck = this.findDeck(own);
+    if (!deck) return;
+
+    cards.forEach((c) => {
+      deck.addCard(c, true);
+    });
   }
 
   updateDeck(own: boolean, cards: Card[]) {
-    console.log(own);
+    this.setDeckProperties(cards);
     const deck = this.decks.find((d) => d.own == own)?.deck;
     deck?.setDeck(cards);
-    console.log("After set deck");
   }
 
   drawCard(own: boolean): Card | undefined {
@@ -49,5 +63,13 @@ export class DecksServiceService implements ZoneService {
   findDeck(own: boolean): Deck | undefined {
     const deck = this.decks.find((d) => d.own == own)?.deck;
     return deck;
+  }
+
+  setDeckProperties(cards: Card[]): void {
+    cards.forEach((c) => {
+      c.place = 'deck';
+      c.rested = false;
+      c.faceDown = true;
+    });
   }
 }
