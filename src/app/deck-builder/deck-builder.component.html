@@ -37,44 +37,43 @@
       <form class="deck-options">
         <input type="text" name="deck_name" class="new_deck_name"
         placeholder="New deck name" [(ngModel)]="deck_name">
-        <button class="submit" (click)="saveDeck()">Save</button>
-        <button class="submit" (click)="clearDeck()">Clear</button>
-        <br><br>
+        <button class="submit save" (click)="saveDeck()">Save</button>
+        <button class="submit clear" (click)="clearDeck()">Clear</button>
         <select name="saved_decks" class="saved_decks" [(ngModel)]="chosen_deck">
           <option value="">Select deck</option>
           <option [value]="d.name" *ngFor="let d of saved_decks">{{ d.name }}</option>
         </select>
-        <button class="submit" (click)="loadDeck()">Load</button>
-        <button class="submit" (click)="deleteDeck()">Delete</button>
+        <button class="submit load" (click)="loadDeck()">Load</button>
+        <button class="submit delete" (click)="deleteDeck()">Delete</button>
       </form>
 
       <app-raw-card *ngFor="let card of deck" [card]="card"></app-raw-card>
-
     </div>
     <div class="search-form-container">
       <form class="search-form" (submit)="applyFilter()">
-        <div class="form-row">
-          <input type="text" name="digi_name" placeholder="Card name" [(ngModel)]="byName">
-          <select name="color" [(ngModel)]="byColor">
-            <option value="">Color</option>
-            <option *ngFor="let c of colors" [value]="c">{{ c }}</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <input type="number" name="level" placeholder="Lv" [(ngModel)]="byLevel">
-          <input type="number" name="play_cost" placeholder="Play" [(ngModel)]="byPlay">
-          <input type="number" name="evolution_cost" placeholder="Evol" [(ngModel)]="byEvol">
-          <select name="type" [(ngModel)]="byType">
-            <option value="">Type</option>
-            <option *ngFor="let t of types" [value]="t">{{ t }}</option>
-          </select>
-        </div>
-        <div class="form-row button-row">
-          <button type="submit" class="search-btn">Search!</button>
-          <button class="resert-params" (click)="resetParams()">
-            <fa-icon [icon]="faTrash"></fa-icon>
-          </button>
-        </div>
+        <input type="text" class="name" name="digi_name" placeholder="Card name" [(ngModel)]="byName">
+
+        <select name="color" class="color" [(ngModel)]="byColor">
+          <option value="">Color</option>
+          <option *ngFor="let c of colors" [value]="c">{{ c }}</option>
+        </select>
+
+        <input type="number" class="cost level" name="level" placeholder="Lv" [(ngModel)]="byLevel">
+
+        <input type="number" class="cost play_cost" name="play_cost" placeholder="Play" [(ngModel)]="byPlay">
+
+        <input type="number" class="cost evolution_cost" name="evolution_cost" placeholder="Evol" [(ngModel)]="byEvol">
+
+        <select name="type" class="type" [(ngModel)]="byType">
+          <option value="">Type</option>
+          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+        </select>
+
+        <button type="submit" class="search-btn">Search!</button>
+
+        <button class="resert-params" (click)="resetParams()">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
       </form>
       <div class="results">
         <app-card-result-item *ngFor="let c of cards" [card]="c">
